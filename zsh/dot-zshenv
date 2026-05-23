@@ -43,5 +43,3 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 export ELECTRON_OZONE_PLATFORM_HINT="auto"
 
 export PATH="${PATH}:${HOME}/.local/bin"
-
-. "$HOME/.local/share/../bin/env"
