@@ -1,0 +1,47 @@
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+export XKB_DEFAULT_LAYOUT="de"
+export EDITOR="nvim"
+export BROWSER="/usr/bin/firefox"
+export TERMINAL="/usr/bin/footclient"
+export CLIPBOARD="/usr/bin/wl-copy -n"
+
+export HISTFILE="${XDG_STATE_HOME}/zsh/history"
+export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
+export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority"
+
+export XDG_CURRENT_DESKTOP="sway"
+
+# Dev-Tools
+export CARGO_HOME="${XDG_DATA_HOME}/cargo"
+export GRADLE_USER_HOME="${XDG_DATA_HOME}/gradle"
+export PLATFORMIO_CORE_DIR="${XDG_DATA_HOME}/platformio"
+export PICO_SDK_PATH="${XDG_DATA_HOME}/pico-sdk/sdk/2.1.1"
+export GOPATH="${XDG_DATA_HOME}/go"
+export GOMODCACHE="${GOPATH}/pkg/mod"
+export JUPYTER_CONFIG_DIR="${XDG_CONFIG_HOME}/jupyter"
+export JUPYTER_DATA_DIR="${XDG_DATA_HOME}/jupyter"
+export JUPYTER_RUNTIME_DIR="${XDG_DATA_HOME}/jupyter/runtime"
+export IPYTHONDIR="${XDG_CONFIG_HOME}/ipython"
+export SDKMAN_DIR="${XDG_DATA_HOME}/sdkman"
+export PATH="${PATH}:${HOME}/.espressif/xtensa-lx106-elf/bin"
+export JAVA_HOME="/usr/lib/jvm/java-25-openjdk/bin/java"
+export IDF_PATH="${HOME}/.espressif/ESP8266_RTOS_SDK"
+export PATH="/home/chris/perl5/bin${PATH:+:${PATH}}"; export PATH;
+export PERL5LIB="/home/chris/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+export PERL_LOCAL_LIB_ROOT="/home/chris/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+export PERL_MB_OPT="--install_base \"/home/chris/perl5\""; export PERL_MB_OPT;
+export PERL_MM_OPT="INSTALL_BASE=/home/chris/perl5"; export PERL_MM_OPT;
+
+# Options for properly displaying Java applications
+export _JAVA_AWT_WM_NONREPARENTING=1
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
+
+export ELECTRON_OZONE_PLATFORM_HINT="auto"
+
+export PATH="${PATH}:${HOME}/.local/bin"
+
+. "$HOME/.local/share/../bin/env"

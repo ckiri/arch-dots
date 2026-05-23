@@ -1,0 +1,3 @@
+max-icon-size=24
+format=<b>%a</b>\n%s
+default-timeout=20000

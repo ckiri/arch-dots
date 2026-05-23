@@ -1,0 +1,58 @@
+# load version control information
+autoload -Uz vcs_info
+
+# enable the vcs variable & format it
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats ' (%b)'
+
+# define the precmd hook function
+precmd() {
+    vcs_info
+    if test -n "$SSH_CLIENT"
+    then
+	print -Pn "\e]0;[SSH] %n@%m in %/\a" # show session info on window title
+    else
+	print -Pn "\e]0;%n@%m in %/\a"
+    fi
+}
+
+# check if connected via ssh
+fmt_prompt() {
+    if test -n "$SSH_CLIENT"
+    then
+        print "[SSH] %n@%m \n%3~${vcs_info_msg_0_}%(?.. E:%?) %# "
+    else
+        print "%3~${vcs_info_msg_0_}%(?.. E:%?) %# "
+    fi
+}
+
+# prompt configuration
+setopt PROMPT_SUBST
+PROMPT='$(fmt_prompt)'
+
+# shell history configuration
+HISTSIZE=100000
+SAVEHIST=100000
+setopt SHARE_HISTORY # share history between sessions
+HISTFILE=~/.cache/zsh/history # history cache directory
+
+# tab-completion
+autoload -U compinit
+zstyle ':completion:*' menu select 
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots) # Include hidden files.
+
+# keymaps
+export KEYTIMEOUT=1
+bindkey -v # vi-mode
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M vicmd '/' history-incremental-search-backward
+bindkey -v ':' vi-cmd-mode
+
+# Aliases
+alias vim="${EDITOR}"
+alias nano="${EDITOR}"
