@@ -22,8 +22,7 @@ vim.opt.encoding = 'utf-8'
 vim.opt.formatoptions = 'tcqrn1'
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
-vim.opt.colorcolumn = '80'
-vim.opt.signcolumn = 'auto'
+vim.opt.signcolumn = 'no'
 vim.opt.background = 'light'
 
 vim.opt.smarttab = true
@@ -127,12 +126,12 @@ vim.cmd("let g:llama_config = { 'show_info': 0 }")
 -- language formatting --------------------------------------------------------
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "java,c,sh,ms,python,go",
+  pattern = "java,c,sh,python,perl",
   command = "setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab",
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "make",
+  pattern = "make,go",
   command = "setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=0",
 })
 
@@ -141,14 +140,11 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab",
 })
 
--- styling --------------------------------------------------------
-
-vim.cmd('colorscheme vim')
-vim.cmd('syntax off')
+vim.cmd.colorscheme("vim")
 
 vim.api.nvim_create_autocmd('BufEnter', {
   pattern = '*',
   callback = function()
-    vim.treesitter.stop()
+    vim.opt.termguicolors = false
   end
 })

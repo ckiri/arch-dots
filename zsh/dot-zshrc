@@ -55,3 +55,4 @@ bindkey -M vicmd '/' history-incremental-search-backward
 # Aliases
 alias vim="${EDITOR}"
 alias nano="${EDITOR}"
+alias nvim="nvim"
