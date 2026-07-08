@@ -55,4 +55,12 @@ bindkey -M vicmd '/' history-incremental-search-backward
 # Aliases
 alias vim="${EDITOR}"
 alias nano="${EDITOR}"
-alias nvim="nvim"
+alias open="xdg-open"
+
+open-file-manager() {
+    pcmanfm . >/dev/null 2>&1 &!
+}
+
+zle -N open-file-manager
+
+bindkey '^O' open-file-manager

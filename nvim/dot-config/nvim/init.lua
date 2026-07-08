@@ -64,6 +64,21 @@ vim.g.vimwiki_list = {
   },
 }
 
+-- Custom functions ------------------------------------------------------------
+
+-- Run Make in an external terminal that is detached from Neovim ---------------
+local function make_external()
+  local cmd_str = string.format(
+    'setsid $TERMINAL ' ..
+    '--window-size-chars=80x10 ' ..
+    '--title=Make ' ..
+    '--app-id=nvim-lua-make-external ' ..
+    '-e sh -c "make && exit || (read -p \\"Press Enter to exit\\" && exit)" ' ..
+    '>/dev/null 2>&1'
+  )
+  vim.cmd('silent !' .. cmd_str)
+end
+
 -- completion setup ------------------------------------------------------------
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -82,14 +97,19 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")
 vim.keymap.set("n", "gb", ":bnext<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gB", ":bprev<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>bl", ":buffers<CR>",
+vim.keymap.set("n", "<leader>bl", ":buffers<CR>:b",
   { noremap = true, silent = true }
 )
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>el", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>ai", ":LlamaToggle<CR>",
   { noremap = true, silent = true } -- Toggle model completion on/off
-) 
+)
+
+vim.keymap.set('n', '<Leader>m', make_external, {
+  noremap = true,
+  silent = true
+})
 
 local on_attach = function(_, bufnr)
   local opts = { buffer = bufnr, silent = true }
@@ -105,6 +125,7 @@ local on_attach = function(_, bufnr)
 end
 
 -- language server setup -------------------------------------------------------
+local lspconfig = require('lspconfig')
 
 -- C
 vim.lsp.enable('clangd')
@@ -113,10 +134,31 @@ vim.lsp.enable('clangd')
 vim.lsp.enable('gopls')
 
 -- Python
-vim.lsp.enable('pylsp')
+lspconfig.pylsp.setup({
+  on_attach = on_attach
+})
 
--- Perl
-vim.lsp.enable('perlpls')
+-- Lua
+lspconfig.lua_ls.setup({
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { 'vim' },
+      },
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME,
+        },
+      },
+      ignoreDir = {
+        '.git',
+        'node_modules',
+      },
+    },
+  },
+})
 
 -- llm config -----------------------------------------------------------------
 
@@ -140,11 +182,15 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab",
 })
 
-vim.cmd.colorscheme("vim")
-
-vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = '*',
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.tex",
   callback = function()
-    vim.opt.termguicolors = false
-  end
+    vim.bo.filetype = "tex"
+  end,
 })
+
+-- styling ---------------------------------------------------------------------
+
+vim.cmd.colorscheme("quiet")
+
+vim.api.nvim_set_hl(0, "Normal", { bg = "#ffffff", })

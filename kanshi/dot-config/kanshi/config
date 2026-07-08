@@ -13,6 +13,35 @@ profile desk {
 	adaptive_sync on
     }
 }
+profile dock {
+    output eDP-1 disable
+    output "LG Electronics LG ULTRAFINE 508NTZNM6853" enable {
+        mode 3840x2160@59.995998Hz
+        scale 1.5
+        position 0,0
+    }
+}
+profile extend {
+    output eDP-1 enable {
+        mode 2256x1504@59.999001Hz
+        scale 1.5
+        position 0,0
+    }
+    output "LG Electronics LG ULTRAFINE 508NTZNM6853" enable {
+        mode 3840x2160@59.995998Hz
+        scale 1.25
+        position -784,-1728
+    }
+}
+profile extend {
+    output eDP-1 enable {
+        mode 2256x1504@59.999001Hz
+        scale 1.5
+    }
+    output DP-1 enable {
+        scale 1.25
+    }
+}
 # Mirror the two outputs in use, internal output is mirrored to external output
 profile mirror {
     output eDP-1 enable {
@@ -22,20 +51,9 @@ profile mirror {
     }
     output DP-1 enable {
         position 0,-1504
-        scale 1
+        scale 1.5
     }
     exec wl-present mirror eDP-1 --fullscreen-output DP-1 --fullscreen
-}
-profile extend {
-    output eDP-1 enable {
-        mode 2256x1504@59.999001Hz
-        scale 1.5
-        position 0,-1504
-    }
-    output DP-1 enable {
-        position 0,0
-        scale 1.25
-    }
 }
 profile external {
     output eDP-1 disable
