@@ -3,8 +3,6 @@
 # Select a password from `pass` using wmenu (dmenu wayland) instead of dmenu.
 # Mocks the standart implementation of passmenu. 
 
-symbol="/usr/share/icons/Papirus-Dark/symbolic/status/dialog-password-symbolic.svg"
-
 # Check if a wayland compositor is used, if not throw error
 if test -n $WAYLAND_DISPLAY; then
     menu="wmenu"
@@ -14,10 +12,10 @@ else
 fi
 
 # Select all passwords in password store
-password_files=$(find ~/.password-store -type f -name '*.gpg' -exec sh -c 'basename {} .gpg' \;)
+password_files=$(find ~/.password-store -name '*.gpg' | cut -d "/" -f 5- | cut -d "." -f 1)
 
 # Pipe all passwords into the menu
-password=$(printf '%s\n' "${password_files}" | $menu "$@")
+password=$(printf '%s\n' "${password_files}" | $menu -f "Sans-serif 10" "$@")
 
 # Exit if store is empty
 test -n $password || exit
