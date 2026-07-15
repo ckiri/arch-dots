@@ -53,7 +53,7 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M vicmd '/' history-incremental-search-backward
 
 # Aliases
-alias vim="${EDITOR}"
+alias neovim="${EDITOR}"
 alias nano="${EDITOR}"
 alias open="xdg-open"
 
