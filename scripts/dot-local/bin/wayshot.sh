@@ -13,7 +13,7 @@ shoot() {
     timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 
     # Name screenshot
-    input=$(printf "" | wmenu -p "Filename: " -S 222222)
+    input=$(printf "" | wmenu -f "Sans-serif 10" -p "Filename: " -S 222222)
     test -n "$input" && filename="${input}.png"
     # Take timesramp if input/name is empty
     test ! -n "$input" && filename="${OUTPUT_PREFIX}${timestamp}.png"

@@ -12,7 +12,7 @@ else
 fi
 
 # Select all passwords in password store
-password_files=$(find ~/.password-store -name '*.gpg' | cut -d "/" -f 5- | cut -d "." -f 1)
+password_files=$(find ~/.password-store -name '*.gpg' | cut -d "/" -f 5- | sed s/.gpg// )
 
 # Pipe all passwords into the menu
 password=$(printf '%s\n' "${password_files}" | $menu -f "Sans-serif 10" "$@")
