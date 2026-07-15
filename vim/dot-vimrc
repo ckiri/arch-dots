@@ -1,0 +1,73 @@
+set nocompatible                " make vim act like vim and not vi
+
+filetype plugin indent on
+
+let mapleader = " "
+let g:netrw_banner=0            " disable netrw's (filebrowser) banner, which takes up a lot of space
+let g:netrw_liststyle=3         " enable a tree style list
+
+set mouse=a                     " allow the mouse
+set path+=**                    " allows for global searches
+set clipboard^=unnamed
+set clipboard^=unnamedplus
+set undofile
+set undodir=~/.cache/vim/undo
+set undolevels=1000
+set ruler                       " show line and column number (on the statusline)
+set encoding=utf-8
+set autoindent                  " 'n' option in formatoptions below requires autoindent
+set formatoptions=tcqn1         " specify formatting behavior see 'fo-table' for details
+set expandtab                   " use spaces for tabs, run ':retab!' to changes spaces to tabs
+set noshiftround
+set scrolloff=10                " offset when scrolling
+set matchpairs+=<:>             " add html pairs '<' & '>', jump pairs with '%'
+set showmode
+set showcmd
+set showbreak=↪\
+set incsearch                   " while typing in search show matches
+set ignorecase                  " ignore case in search patterns
+set smartcase                   " override ignorecase if search pattern contains upper case
+set laststatus=2                " always show a statusline
+set hidden                      " allows for switching buffers without saving
+
+set shiftwidth=4
+set smarttab
+
+autocmd FileType c setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=0
+autocmd FileType html setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType lua setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType sh setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType make setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=0
+autocmd FileType markdown setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType toml setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+
+function! MakeExternal()
+  silent! !setsid $TERMINAL --window-size-chars=80x10 --title=Make --app-id=nvim-lua-make-external -e sh -c "make && exit || (read -p \\\"Press Enter to exit\\\" && exit)" >/dev/null 2>&1
+endfunction
+
+nnoremap <silent> <Leader>m :call MakeExternal()<CR>
+" open the notes file
+nnoremap <leader>ww :e ~/notes.txt<CR>
+" open a the current diary
+nnoremap <leader>w<leader>w :e ~/docs/diary/<C-r>=strftime("%d%m%y")<CR>.txt<CR>
+" next buffer
+nnoremap <leader>b :bnext<CR>
+" previous buffer
+nnoremap <leader>B :bprev<CR>
+" jump to a specific buffer
+nnoremap <leader>bl :buffers<CR>:b
+" go to Tag (ctags)
+nnoremap <leader>t <C-]>
+" jump back (ctags)
+nnoremap <leader>T <C-t>
+" taglist (ctags)
+nnoremap <leader>tl <tselect<CR>
+nnoremap j gj
+nnoremap k gk
+
+syntax off
