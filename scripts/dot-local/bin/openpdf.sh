@@ -2,6 +2,6 @@
 #
 # Open PDFs using zathura
 
-file=$(find ~/docs -name "*.pdf" | wmenu -l 20 -f "Sans-serif 10")
+file=$(find ~/docs -name "*.pdf" | wmenu -l 20)
 test -z "$file" && exit 1
 zathura "$file"

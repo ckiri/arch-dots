@@ -46,11 +46,6 @@ autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType toml setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 
-function! MakeExternal()
-  silent! !setsid $TERMINAL --window-size-chars=80x10 --title=Make --app-id=nvim-lua-make-external -e sh -c "make && exit || (read -p \\\"Press Enter to exit\\\" && exit)" >/dev/null 2>&1
-endfunction
-
-nnoremap <silent> <Leader>m :call MakeExternal()<CR>
 " open the notes file
 nnoremap <leader>ww :e ~/notes.txt<CR>
 " open a the current diary

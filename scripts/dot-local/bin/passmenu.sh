@@ -15,7 +15,7 @@ fi
 password_files=$(find ~/.password-store -name '*.gpg' | cut -d "/" -f 5- | sed s/.gpg// )
 
 # Pipe all passwords into the menu
-password=$(printf '%s\n' "${password_files}" | $menu -f "Sans-serif 10" "$@")
+password=$(printf '%s\n' "${password_files}" | $menu "$@")
 
 # Exit if store is empty
 test -n $password || exit

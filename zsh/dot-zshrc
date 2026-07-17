@@ -38,7 +38,7 @@ HISTFILE=~/.cache/zsh/history # history cache directory
 
 # tab-completion
 autoload -U compinit
-zstyle ':completion:*' menu select 
+zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots) # Include hidden files.
@@ -64,3 +64,5 @@ open-file-manager() {
 zle -N open-file-manager
 
 bindkey '^O' open-file-manager
+
+. "$HOME/.local/share/../bin/env"
