@@ -10,12 +10,12 @@ set $opm_off 'swaymsg "output * power off"'
 set $opm_on 'swaymsg "output * power on"'
 # Options ######################################################################
 floating_modifier $mod
-font pango:Sans-serif 10
 # Autostart apps ###############################################################
 exec swayidle -w \
     timeout 1200 'swaylock -f' \
     timeout 1260 $opm_off resume $opm_on \
-    before-sleep 'swaylock -f' >/dev/null 2>&1
+    before-sleep 'swaylock -f' \
+    timeout 1260 $opm_off resume $opm_on /dev/null 2>&1
 exec dconf write /org/gnome/desktop/interface/color-scheme '"prefer-light"'
 exec gsettings set org.gnome.desktop.interface gtk-theme '' >/dev/null 2>&1
 exec gsettings set org.gnome.desktop.interface icon-theme '' >/dev/null 2>&1

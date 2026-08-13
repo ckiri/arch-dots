@@ -24,6 +24,9 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.signcolumn = 'no'
 vim.opt.background = 'light'
+vim.opt.modeline = true
+vim.opt.modelines = 2
+vim.opt.modelineexpr = false
 
 vim.opt.smarttab = true
 vim.opt.shiftwidth = 4
@@ -168,7 +171,7 @@ vim.cmd("let g:llama_config = { 'show_info': 0 }")
 -- language formatting --------------------------------------------------------
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "java,c,sh,python,perl",
+  pattern = "c,sh,python,tex,json",
   command = "setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab",
 })
 
@@ -178,7 +181,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "html,css,javascript,lua,markdown,yaml,toml",
+  pattern = "html,css,lua,markdown,yaml,toml",
   command = "setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab",
 })
 
@@ -188,9 +191,3 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
     vim.bo.filetype = "tex"
   end,
 })
-
--- styling ---------------------------------------------------------------------
-
-vim.cmd.colorscheme("quiet")
-
-vim.api.nvim_set_hl(0, "Normal", { bg = "#ffffff", })

@@ -53,16 +53,5 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M vicmd '/' history-incremental-search-backward
 
 # Aliases
-alias neovim="${EDITOR}"
 alias nano="${EDITOR}"
 alias open="xdg-open"
-
-open-file-manager() {
-    pcmanfm . >/dev/null 2>&1 &!
-}
-
-zle -N open-file-manager
-
-bindkey '^O' open-file-manager
-
-. "$HOME/.local/share/../bin/env"
