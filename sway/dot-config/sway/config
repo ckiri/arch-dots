@@ -5,26 +5,31 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $menu wmenu-run -f "Sans-serif 10" | xargs swaymsg exec --
+set $menu wmenu-run | xargs swaymsg exec --
+set $opm_dim 'brightnessctl --save && brightnessctl set 1%'
+set $opm_restore 'brightnessctl --restore'
 set $opm_off 'swaymsg "output * power off"' 
 set $opm_on 'swaymsg "output * power on"'
 # Options ######################################################################
 floating_modifier $mod
 # Autostart apps ###############################################################
 exec swayidle -w \
+    timeout 900 $opm_dim resume $opm_restore \
     timeout 1200 'swaylock -f' \
     timeout 1260 $opm_off resume $opm_on \
-    before-sleep 'swaylock -f' \
-    timeout 1260 $opm_off resume $opm_on /dev/null 2>&1
-exec dconf write /org/gnome/desktop/interface/color-scheme '"prefer-light"'
+    timeout 1800 'systemctl suspend-then-hibernate' \
+    before-sleep 'swaylock -f' /dev/null 2>&1
 exec gsettings set org.gnome.desktop.interface gtk-theme '' >/dev/null 2>&1
 exec gsettings set org.gnome.desktop.interface icon-theme '' >/dev/null 2>&1
-exec gammastep -l 49.0:9.2 -t 5700:3600 >/dev/null 2>&1
+exec kanshi >/dev/null 2>&1
+exec gromit-mpx >/dev/null 2>&1
 exec foot --server >/dev/null 2>&1
-exec swaybg --color "#777777" >/dev/null 2>&1
+exec ~/.local/bin/switch-scheme.sh --auto >/dev/null 2>&1
+exec gammastep -l 49.0:9.2 -t 5700:3600 >/dev/null 2>&1
 exec dbus-update-activation-environment \
     --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP >/dev/null 2>&1
 exec_always swaymsg focus_follows_mouse no >/dev/null 2>&1
+exec_always kanshictl reload >/dev/null 2>&1
 # Keybindings ##################################################################
 bindsym $mod+Shift+Return exec $TERMINAL
 bindsym $mod+Shift+c kill
@@ -40,6 +45,8 @@ bindsym F9+Shift exec gromit-mpx --clear
 bindsym Print exec ~/.local/bin/wayshot.sh
 bindsym $wmod+Shift+s exec ~/.local/bin/wayshot.sh
 bindsym $wmod+s exec ~/.local/bin/websearch.sh
+bindsym $mod+Shift+s exec ~/.local/bin/switch-scheme.sh --toggle
+bindsym $wmod+w exec ~/.local/bin/webcam.sh
 bindsym XF86MonBrightnessUp exec brightnessctl --exponent=5 set +5%
 bindsym XF86MonBrightnessDown exec brightnessctl --exponent=5 set 5%-
 bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+
@@ -102,10 +109,9 @@ for_window [instance="pinentry-gtk"] floating enable
 for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
 for_window [app_id="thunderbird" title="Erinnerung"] floating enable
 for_window [app_id="xdg-desktop-portal-gtk"] floating enable
-for_window [app_id="nvim-lua-make-external" title="Make"] floating enable
-for_window [app_id="nvim-lua-make-external" title="Make"] move position 10 10
+for_window [app_id="nvim-lua-make-external" title="Make"] floating enable, move position 10 10
+for_window [title="/dev/video*"] floating enable, resize set 640px height 360px, move position 10 10
 no_focus [title="Make"]
-#for_window [class="^.*"] border pixel
 # Workspace configuration ######################################################
 workspace 11 output DP-1
 # Statusbar ####################################################################
@@ -114,7 +120,7 @@ bar {
     #mode hide
     position bottom
     height 0
-    status_command slstatus -s
+    status_command while true; do ~/.local/bin/status.sh; sleep 30; done
     colors {
         background #222222
     }
@@ -142,7 +148,6 @@ input "type:touchpad" {
 output "LG Electronics LG ULTRAFINE 508NTZNM6853" {
     resolution 3840x2160@60.000000Hz
     scale 1.5
-    scale_filter nearest
 }
 # Defaults #####################################################################
 include /etc/sway/config.d/*
