@@ -10,7 +10,7 @@ main() {
     # Send warning if battery is low and no charger is plugged in
     test "${bat_perc}" -le 5 && test "${bat_status}" != 'Charging' \
         && notify-send --urgency=ciritcal "Plug in a charger, low battery!"
-    printf "${bat_perc}-${bat_status}"
+    printf "%s\n" "${bat_perc}% (${bat_status})"
 }
 
 main
