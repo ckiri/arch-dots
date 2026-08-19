@@ -12,8 +12,5 @@ sudo rsync \
     --exclude='dl' \
     --exclude='templates' \
     --exclude='vm' \
-    --exclude='pics' \
-    --exclude='vids' \
-    --exclude='proj' \
     --log-file=$HOME/.rsync.log \
-    $HOME/* $HOME/nas/chris/framework-backup
+    $HOME/* /nas/chris/backup
