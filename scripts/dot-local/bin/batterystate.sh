@@ -2,9 +2,10 @@
 #
 # Check the battery status
 
-bat_name="CMB1"
 
 main() {
+    bat_name=$(ls --format=single-column /sys/class/power_supply/ | grep -E '\b[A-Z]{2,3}[0-9]\b')
+    test ! -n "$bat_name" && exit 1
     read bat_perc < /sys/class/power_supply/${bat_name}/capacity
     read bat_status < /sys/class/power_supply/${bat_name}/status
     # Send warning if battery is low and no charger is plugged in
