@@ -15,6 +15,7 @@ scripts/dot-local/bin/futurize
 scripts/dot-local/bin/isort
 scripts/dot-local/bin/isort-identify-imports
 scripts/dot-local/bin/llama-batched-bench
+scripts/dot-local/bin/llama
 scripts/dot-local/bin/llama-bench
 scripts/dot-local/bin/llama-cli
 scripts/dot-local/bin/llama-completion
