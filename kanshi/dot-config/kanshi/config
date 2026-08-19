@@ -1,14 +1,9 @@
-profile framework {
-    output eDP-1 enable {
-        mode 2256x1504@59.999001Hz
-        position 0,0
-        scale 1.5
-    }
+profile notebook {
+    output eDP-1 enable
 }
 profile desk {
     output "LG Electronics LG ULTRAFINE 508NTZNM6853" enable {
         mode 3840x2160@59.995998Hz
-        position 0,0
         scale 1.5
 	adaptive_sync on
     }
@@ -18,56 +13,21 @@ profile dock {
     output "LG Electronics LG ULTRAFINE 508NTZNM6853" enable {
         mode 3840x2160@59.995998Hz
         scale 1.5
-        position 0,0
-    }
-}
-profile extend {
-    output eDP-1 enable {
-        mode 2256x1504@59.999001Hz
-        scale 1.5
-        position 0,0
-    }
-    output "LG Electronics LG ULTRAFINE 508NTZNM6853" enable {
-        mode 3840x2160@59.995998Hz
-        scale 1.25
-        position -784,-1728
-    }
-}
-profile extend {
-    output eDP-1 enable {
-        mode 2256x1504@59.999001Hz
-        scale 1.5
-    }
-    output DP-1 enable {
-        scale 1.25
-    }
-}
-# Mirror the two outputs in use, internal output is mirrored to external output
-profile mirror {
-    output eDP-1 enable {
-        mode 2256x1504@59.999001Hz
-        position 0,0
-        scale 1.5
-    }
-    output DP-1 enable {
-        position 0,-1504
-        scale 1.5
-    }
-    exec wl-present mirror eDP-1 --fullscreen-output DP-1 --fullscreen
-}
-profile external {
-    output eDP-1 disable
-    output "LG Electronics LG ULTRAFINE 508NTZNM6853" enable {
-        mode 3840x2160@59.995998Hz
-        position 0,0
-        scale 1.5
 	adaptive_sync on
     }
 }
-profile external {
-    output eDP-1 disable
-    output DP-1 enable {
-        position 0,0
-        scale 1.25
+profile extend {
+    output eDP-1 enable
+    output "LG Electronics LG ULTRAFINE 508NTZNM6853" enable {
+        mode 3840x2160@59.995998Hz
+        scale 1.5
     }
+}
+profile mirror {
+    output eDP-1 enable
+    output HDMI-A-1 enable {
+        mode 1920x1080@60.000000Hz
+        scale 1.0
+    }
+    exec wl-present mirror eDP-1 --fullscreen-output HDMI-A-1 --fullscreen
 }
