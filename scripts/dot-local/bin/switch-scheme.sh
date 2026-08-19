@@ -2,8 +2,8 @@
 #
 # Switch between light and dark ui
 
-dawn_hour=7
-dusk_hour=19
+dawn_hour=8
+dusk_hour=18
 
 set_light() {
     dconf write /org/gnome/desktop/interface/color-scheme '"prefer-light"'
